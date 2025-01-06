@@ -8,7 +8,7 @@ function CreateUser() {
     const [address, setAddress] = useState("");
     const navigate = useNavigate(); 
 
-    const submit = (e) => {l 
+    const submit = (e) => {
         e.preventDefault();
         axios
             .post("https://backend-demo-egyl.onrender.com/api/user/create", { name, email, address })
