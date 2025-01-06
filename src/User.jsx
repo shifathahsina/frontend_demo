@@ -16,20 +16,22 @@ function User() {
             });
     }, []);
 
-    const deleteUser = (id) =>
-    {
-        axios.delete(`https://backend-demo-egyl.onrender.com/api/user/remove/${id}`)
-        .then(result=>{
-            console.log("User deleted Successfully");
-        })
-        .catch(err=>{console.log(err)})
-    }
+    const deleteUser = (id) => {
+        axios
+            .delete(`https://backend-demo-egyl.onrender.com/api/user/remove/${id}`)
+            .then((result) => {
+                alert("User deleted successfully!");
+                setUser(user.filter((u) => u._id !== id));
+            })
+            .catch((err) => {
+                console.error(err);
+                alert("Error deleting user.");
+            });
+    };
 
     return (
         <div style={containerStyle}>
-            <center>
-                <h1 style={headingStyle}>User List</h1>
-            </center>
+            <h1 style={headingStyle}>User List</h1>
             <div style={actionContainerStyle}>
                 <Link to="/create" style={createLinkStyle}>
                     Create New User
@@ -46,15 +48,18 @@ function User() {
                 </thead>
                 <tbody>
                     {user.map((user) => (
-                        <tr key={user.email}>
+                        <tr key={user._id}>
                             <td style={tdStyle}>{user.name}</td>
                             <td style={tdStyle}>{user.email}</td>
                             <td style={tdStyle}>{user.address}</td>
                             <td style={tdStyle}>
-                                <Link to={`/update/${user._id}`}style={actionLinkStyle}>
+                                <Link to={`/update/${user._id}`} style={actionLinkStyle}>
                                     Update
-                                </Link>{" "}
-                                <button style={deleteButtonStyle} onClick={() => deleteUser(user._id)}>
+                                </Link>
+                                <button
+                                    style={deleteButtonStyle}
+                                    onClick={() => deleteUser(user._id)}
+                                >
                                     Delete
                                 </button>
                             </td>
@@ -71,63 +76,87 @@ const containerStyle = {
     maxWidth: "800px",
     margin: "50px auto",
     padding: "20px",
-    border: "1px solid #ccc",
-    borderRadius: "8px",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-    backgroundColor: "#f9f9f9",
+    borderRadius: "12px",
+    boxShadow: "0 6px 15px rgba(0, 0, 0, 0.2)",
+    background: "linear-gradient(135deg, #f3f4f6, #e2e8f0)",
+    fontFamily: "'Inter', sans-serif",
+    textAlign: "center",
 };
 
 const headingStyle = {
     marginBottom: "20px",
-    color: "#333",
+    color: "#2d3748",
+    fontSize: "1.8rem",
+    fontWeight: "600",
 };
 
 const actionContainerStyle = {
     textAlign: "right",
-    marginBottom: "10px",
+    marginBottom: "20px",
 };
 
 const createLinkStyle = {
-    padding: "10px 15px",
-    backgroundColor: "#007BFF",
+    padding: "10px 20px",
+    background: "linear-gradient(90deg, #4a90e2, #007bff)",
     color: "#fff",
     textDecoration: "none",
-    borderRadius: "5px",
+    borderRadius: "8px",
     fontSize: "14px",
+    fontWeight: "600",
+    transition: "background 0.3s ease",
+};
+
+createLinkStyle["hover"] = {
+    background: "linear-gradient(90deg, #007bff, #0056b3)",
 };
 
 const tableStyle = {
     width: "100%",
     borderCollapse: "collapse",
     marginTop: "20px",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
 };
 
 const thStyle = {
-    padding: "10px",
-    borderBottom: "2px solid #ddd",
+    padding: "12px",
     textAlign: "left",
-    backgroundColor: "#f2f2f2",
+    background: "linear-gradient(135deg, #e9ecef, #dee2e6)",
     fontWeight: "bold",
+    color: "#2d3748",
 };
 
 const tdStyle = {
     padding: "10px",
-    borderBottom: "1px solid #ddd",
+    borderBottom: "1px solid #e2e8f0",
+    color: "#4a5568",
 };
 
 const actionLinkStyle = {
-    color: "#007BFF",
+    color: "#007bff",
     textDecoration: "none",
+    fontWeight: "600",
     marginRight: "10px",
+    transition: "color 0.3s ease",
+};
+
+actionLinkStyle["hover"] = {
+    color: "#0056b3",
 };
 
 const deleteButtonStyle = {
-    padding: "5px 10px",
+    padding: "8px 12px",
     backgroundColor: "#dc3545",
     color: "#fff",
     border: "none",
-    borderRadius: "3px",
+    borderRadius: "5px",
     cursor: "pointer",
+    fontSize: "14px",
+    fontWeight: "600",
+    transition: "background 0.3s ease",
+};
+
+deleteButtonStyle["hover"] = {
+    backgroundColor: "#a71d2a",
 };
 
 export default User;
